@@ -15,6 +15,7 @@ Preguntas:
 1. Vamos a emplear el espacio de direcciones completo?
 
     1.1. Los procesadores actuales permiten direccionar toda esa memoria?
+    
     1.2. En caso negativo a la pregunta 1: Cuantos bits vamos a usar
 		
 2. Porque es importante la memoria virtual? Como la vamos a implementar?
