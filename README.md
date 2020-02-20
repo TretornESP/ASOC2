@@ -1,5 +1,13 @@
 # ASOC2
 
+Ha llegado la hora.
+
+En este repositorio encontraréis multiples branches. En cada una encontraréis una carpeta
+semanal con las labores que los líderes de cada equipo deben proponer. La respuesta se publicará en la misma carpeta
+cada semana antes de la sesión.
+
+------------------------
+
 To build the crosscompiler run script.sh and then:
 
 export PREFIX="$HOME/Documents/Cross/Install"
