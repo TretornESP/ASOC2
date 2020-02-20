@@ -1,10 +1,17 @@
-# ASOC2
+# ASOC2 Bootloader
 
-To build the crosscompiler run script.sh and then:
+Coordinador: 
 
-export PREFIX="$HOME/Documents/Cross/Install"
-export TARGET=i686-elf
-$PREFIX/bin/$TARGET-gcc --version
+Prefacio:
+	Contamos con un sistema pensado para arquitecturas de 64 bits acorde al manual
+	de ensamblador de Intel que ya conoceis.
 
-Script from:
-https://stackoverflow.com/questions/33450401/building-gcc-make-all-error-2
+Preguntas:
+	1. Describe el proceso que sigue tu máquina hasta que ejecuta la primera linea de
+	tu boot.asm.
+
+	2. Que información pone la bios a nuestra disposición cuando empezamos a ejecutar
+	el bootloader?
+
+	3. Describe el proceso que seguiremos para avanzar de los 16 a 32 bits y de 32 a 64
+
