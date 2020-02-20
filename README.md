@@ -1,10 +1,27 @@
-# ASOC2
+# ASOC2 Procesos
 
-To build the crosscompiler run script.sh and then:
+Coordinador: Jose Alvarez
 
-export PREFIX="$HOME/Documents/Cross/Install"
-export TARGET=i686-elf
-$PREFIX/bin/$TARGET-gcc --version
+Prefacio:
+	Disponemos de una máquina acorde a la especificación del 
+	intel assembly manual que ya conocéis.
 
-Script from:
-https://stackoverflow.com/questions/33450401/building-gcc-make-all-error-2
+	Nuestro objetivo es diseñar las estructuras que empleará
+	nuestro kernel para manejar sus procesos, los algoritmos
+	y el contexto de ejecución. Es importante
+	tener en cuenta que el propio kernel es un proceso
+	que se carga sobre cada proceso de usuario.
+
+Preguntas:
+	Que compondrá un proceso en vuestro sistema?
+
+	Implementaréis COW (Copy on write) ? Si es así ,como? 
+
+	Usaréis concurrencia? Si es así, cooperativa o preemtive?
+
+	Que algoritmo seguiréis para decidir que proceso se ejecutará
+	en cada momento?
+
+	Que condiciones pueden derivar en cambio de contexto?
+
+	Implementaréis interrupciones? Como trataréis los errores del sistema?
