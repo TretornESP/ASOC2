@@ -1,6 +1,6 @@
 # ASOC2 - Módulo de memoria
 
-Coordinador del grupo:
+Coordinador del grupo: Suso
 
 Prefacio:
 
