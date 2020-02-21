@@ -2,6 +2,8 @@
 
 Coordinador del grupo: Suso
 
+Grupo: Aquellas Personas Cuyo Conocimiento Es Limitado
+
 Prefacio:
 
 Contamos con un sistema pensado para arquitecturas de 64 bits
@@ -18,7 +20,7 @@ Preguntas:
     
     1.2. En caso negativo a la pregunta 1: Cuantos bits vamos a usar
 		
-2. Porque es importante la memoria virtual? Como la vamos a implementar?
+2. Por qué es importante la memoria virtual? Como la vamos a implementar?
 
     no entréis en detalle, solo la idea general.
 	
