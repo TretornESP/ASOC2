@@ -1,10 +1,18 @@
-# ASOC2
+# ASOC2 Modulo de ficheros
 
-To build the crosscompiler run script.sh and then:
+Prefacio:
+	Tenemos un sistema acorde a las especificaciones
+	del Intel assembly manual, el sistema soportará 
+	multiples discos y permitirá su administración
 
-export PREFIX="$HOME/Documents/Cross/Install"
-export TARGET=i686-elf
-$PREFIX/bin/$TARGET-gcc --version
+Preguntas:
+	1. Vais a hacer un nuevo sistema de ficheros o usar uno existente?
+	
+	2. Que sistemas de ficheros vais a soportar?
 
-Script from:
-https://stackoverflow.com/questions/33450401/building-gcc-make-all-error-2
+	3. Que tipos de dispositivos de almacenamiento vais a soportar?
+
+	4. Que métodos de acceso a disco vais a soportar? (bloque, bit a bit, 
+	fichero, etc)
+
+
