@@ -1,5 +1,7 @@
 # ASOC2 Procesos
 
+Equipo: mASOCas
+
 Coordinador: Jose Alvarez
 
 Prefacio:
