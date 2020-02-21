@@ -1,6 +1,6 @@
 # ASOC2 Bootloader
 
-Coordinador: 
+Coordinador: Nico Alonso
 
 Prefacio:
 	Contamos con un sistema pensado para arquitecturas de 64 bits acorde al manual
