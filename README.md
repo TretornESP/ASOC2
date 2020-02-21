@@ -1,5 +1,6 @@
 # ASOC2 Modulo de ficheros
 
+Coordinador del grupo: Daniel Sergio Vega
 Prefacio:
 	Tenemos un sistema acorde a las especificaciones
 	del Intel assembly manual, el sistema soportará 
