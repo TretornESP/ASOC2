@@ -1,7 +1,7 @@
 # ASOC2 Modulo de IO
 
 
-Coordinador: 
+Coordinador: Juan Miguel
 
 Prefacio:
 	Tenemos un sistema compatible con la arquitectura
