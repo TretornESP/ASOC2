@@ -14,7 +14,7 @@ Preguntas:
        En un principio existentes.
        Vamos a implementar uno (o más en un caso ideal) de los siguientes sistemas de ficheros:
           UFS
-          Ext2 (Estudiar el caso de ext3 o ext4 y ver si son viables para este proyectos)
+          Ext2 (Estudiar el caso de ext3 o ext4 y ver si son viables para este proyecto)
           FAT
           (Estamos estudiando la posibilidad de implementar alguna otra familia de FS)
 	
@@ -27,7 +27,7 @@ Preguntas:
 	3. Que tipos de dispositivos de almacenamiento vais a soportar?
     
        A nuestros ojos esta pregunta debe ser respondida en conjunto con el equipo de device drivers.
-       Al fin de al cabo suponemos que nuestra implementación es abstracta al espacio físico de almacenamiento,
+       Al fin de al cabo suponemos que nuestra implementación es abstracta al espacio físico de almacenamiento (en principio),
        por tanto una interfaz de programación debe ser acordada entre ficheros/device-drivers.
 
 	4. Que métodos de acceso a disco vais a soportar? (bloque, bit a bit, 
