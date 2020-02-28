@@ -26,9 +26,9 @@ Preguntas:
 
 	3. Que tipos de dispositivos de almacenamiento vais a soportar?
     
-       A nuestros ojos esta pregunta debe ser respondida en conjunto con el equipo de device drivers.
+       A nuestros ojos esta pregunta debe ser respondida en conjunto con el equipo de device drivers o bien I/O.
        Al fin de al cabo suponemos que nuestra implementación es abstracta al espacio físico de almacenamiento (en principio),
-       por tanto una interfaz de programación debe ser acordada entre ficheros/device-drivers.
+       por tanto una interfaz de programación debe ser acordada entre ficheros/(device-drivers | i/o).
 
 	4. Que métodos de acceso a disco vais a soportar? (bloque, bit a bit, 
 	fichero, etc)
