@@ -1,5 +1,6 @@
 @echo off
 if %1 == -64 (
+	echo WARNING: Remember to delete [org 0x7c00], we dont need it here!
 	echo boot64
 	rm -f *.bin *.tmp *.sym *.elf
 	nasm %2 -f elf64 -F dwarf -g -o boot.elf
