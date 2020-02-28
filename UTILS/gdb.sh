@@ -1,0 +1,1 @@
+gdb -ex "cd /home/xabie/asoc/tools/" -ex "symbol-file ./boot.sym" -ex "target remote 127.0.0.1:1234"
