@@ -34,3 +34,7 @@ Preguntas:
 	fichero, etc)
     
        El caso mas sensato (en principio) es el uso de bloques cuyo tamaño está aun por determinar.
+       
+ -----
+ 
+ 	Realizad una interfaz .h (borrador) con las funciones de acceso al disco.
