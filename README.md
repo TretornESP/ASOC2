@@ -31,3 +31,5 @@ Preguntas:
 -------
 	
 	El cambio de contexto lo haréis por software o por hardware via TSS? (pros y cons de cada una)
+	NOTA: Esta pregunta parece muy molona, es una trampa. No le dediqueis mucho tiempo, es solo para modo Legacy, 
+	que en un principio no vamos a usar!
