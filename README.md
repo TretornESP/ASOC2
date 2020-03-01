@@ -14,4 +14,8 @@ Preguntas:
 	el bootloader?
 
 	3. Describe el proceso que seguiremos para avanzar de los 16 a 32 bits y de 32 a 64
+	
+-----
+
+4. Vais a usar BIOS o UEFI?
 
