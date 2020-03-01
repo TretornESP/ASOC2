@@ -27,3 +27,7 @@ Preguntas:
 	Que condiciones pueden derivar en cambio de contexto?
 
 	Implementaréis interrupciones? Como trataréis los errores del sistema?
+	
+-------
+	
+	El cambio de contexto lo haréis por software o por hardware via TSS? (pros y cons de cada una)
