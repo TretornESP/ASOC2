@@ -17,3 +17,8 @@ Preguntas:
 	Definid una metodología de desarrollo para añadir un dispositivo 
 	nuevo cualquiera, desde la idea hasta que el dispositivo es compatible
 	(Api portal, base de datos, repositorio de dd, etc)
+
+------
+
+	Soportaréis DMA?
+	
