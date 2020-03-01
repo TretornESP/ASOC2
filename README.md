@@ -25,5 +25,9 @@ Preguntas:
     no entréis en detalle, solo la idea general.
 	
 3. Si se usa paginación, usaréis la MMU o lo haréis a mano?
-	
 
+--------
+
+4. Usaréis un fichero de swap?
+	
+5. De ser así, definid un algoritmo de swapping apropiado. Puede ser vuestro o preexistente.
