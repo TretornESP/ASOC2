@@ -19,3 +19,5 @@ Preguntas:
 
 4. Vais a usar BIOS o UEFI?
 
+Appendix: https://www.amd.com/system/files/TechDocs/24593.pdf 
+Es bastante mas simple que el manual de Intel
