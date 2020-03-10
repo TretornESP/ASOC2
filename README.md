@@ -24,7 +24,7 @@ Preguntas:
 	Que algoritmo seguiréis para decidir que proceso se ejecutará
 	en cada momento?
 
-	Que condiciones pueden derivar en cambio de contexto?
+	Que condiciones pueden derivar en cambio de proceso?
 
 	Implementaréis interrupciones? Como trataréis los errores del sistema?
 	
