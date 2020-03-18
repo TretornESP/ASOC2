@@ -23,7 +23,6 @@ bool _free(char * p) {
     bool reachedPos = false;
     for (int i = 0; i < PAGE_NUM; i++) {
         if(_index[i].blockStart == p) {
-            printf("FOUND\n");
             reachedPos = true;
             _index[i].blockStart = NULL;
             _index[i].isFree = true;
