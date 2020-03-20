@@ -18,8 +18,8 @@ they will be in the ASLEEP_IN_MEM state.
 int sleep (  Proc *proc , int priority ){
 
     pushcli();                                      // Blocks all interruptions
-    process_toSleep(proc);                          // Put a process to sleep 
-    insert_SleepList(proc,list);                    // Adds the process to the slept processes list
+    process_to_sleep(proc);                         // Put a process to sleep 
+    insert_sleepList(proc,list);                    // Adds the process to the slept processes list
 
     if (process is not interrumptable){                     
         switch_context();                           // Process resumes the execution when it wakes up   
@@ -31,7 +31,7 @@ int sleep (  Proc *proc , int priority ){
         switch_context();                           // Process resumes the execution when it wakes up 
     }
 
-    remove_SleepList(proc,list);                    // Removes the process from the list
+    remove_sleepList(proc,list);                    // Removes the process from the list
 
     if(proc->state == AWAKEN) return 1;
     
@@ -41,9 +41,9 @@ int sleep (  Proc *proc , int priority ){
 void wake_up (Proc *proc){
     
     pushcli();                                      // Blocks all interruptions
-    remove_SleepList(proc,list);                    // Removes the process from the list 
+    remove_sleepList(proc,list);                    // Removes the process from the list 
     proc->state = READY_TO_RUN;                     // Set the process state for READY_TO_RUN
-    insert_SchedulerList(process);                  // Linked List Elligible process
+    insert_schedulerList(process);                  // Linked List Elligible process
     if(proc->state == ASLEEP){                      // If the process is asleep, but isn't allocated in memory
         swap_in(proc);                              // Kernel swap the process into RAM
     } else{
