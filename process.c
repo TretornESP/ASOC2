@@ -44,10 +44,10 @@ void wake_up (Proc *proc){
     remove_SleepList(proc,list);                    // Removes the process from the list 
     proc->state = READY_TO_RUN;                     // Set the process state for READY_TO_RUN
     insert_SchedulerList(process);                  // Linked List Elligible process
-    if(proc->state == ASLEEP){ 
+    if(proc->state == ASLEEP){                      // If the process is asleep, but isn't allocated in memory
         swap_in(proc);                              // Kernel swap the process into RAM
     } else{
         scheduler();                                // Decide which process to run after waking this one up
     } 
-    popcli();
+    popcli();                                       // Unblock all interrupts
 }
