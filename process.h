@@ -34,5 +34,15 @@ typedef Proc  *Process_table;   // Table that contains all processes
     RETURNS:
         int             : Returns 0 if the process has been slept sucessfully, otherwise sends 1.
 */
+
 int sleep (  Proc * proc , int priority );
+
+/* Removes the process from the asleep process list and changes it to be ready to run or awaken
+    PARAMETERS:
+        Proc * proc     : Pointer to the process you want to awaken
+
+    RETURNS:
+        void            : There is no return value
+*/
+
 void wake_up (Proc *proc);
