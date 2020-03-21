@@ -24,7 +24,8 @@ typedef struct{
 
 typedef Proc  *Process_table;   // Table that contains all processes
 
-/* Set the process to sleep mode, also adds it to a list that contains all processes in that state.
+/*  SLEEP
+    Set the process to sleep mode, also adds it to a list that contains all processes in that state.
     PARAMETERS:
         Proc * proc     : Pointer to the process you want to sleep
         int priority    : Priority of the process 
@@ -37,7 +38,8 @@ typedef Proc  *Process_table;   // Table that contains all processes
 
 int sleep (  Proc * proc , int priority );
 
-/* Removes the process from the asleep process list and changes it to be ready to run or awaken
+/*  WAKE_UP
+    Removes the process from the asleep process list and changes it to be ready to run or awaken
     PARAMETERS:
         Proc * proc     : Pointer to the process you want to awaken
 
