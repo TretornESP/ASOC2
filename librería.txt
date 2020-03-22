@@ -1,0 +1,281 @@
+Todas las funciones se pueden ver buscando en google:
+	"[librería] h opengroup"
+en la web pubs.opengroup.org están explicadas
+
+Se que son bastantes, pero creo que no habrá mas que estas
+(y las que necesiteis cuando hagáis la shell).
+
+de momento, empezad con las que están puestas como prioritarias
+y en paralelo a la shell id haciendo el resto.
+
+NOTA: Encontraréis inconsistencias entre las funciones
+	  (fclose no tiene sentido sin fopen) en estos casos
+	  la norma es CRIBAR, borrad la inconsistente, no
+	  añadais la que falte, salvo que sea obvio que es 
+	  una función vital.
+	
+prioritarias: (están mas abajo con la firma)	
+fork
+exec
+mmap
+exit
+malloc
+rand
+free
+system
+alarm
+chdir
+open
+close
+read
+write
+getcwd
+lseek
+rewind
+sleep
+wakeup
+memcpy
+memmove
+memcmp
+printf
+kill
+signal
+
+stdlib.h
+void          _Exit(int);
+double        atof(const char *);
+int           atoi(const char *);
+long          atol(const char *);
+long long     atoll(const char *);
+void         *bsearch(const void *, const void *, size_t, size_t,
+                  int (*)(const void *, const void *));
+void         *calloc(size_t, size_t);
+void          exit(int);
+void          free(void *);
+char         *getenv(const char *);
+void         *malloc(size_t);
+int           posix_memalign(void **, size_t, size_t); 
+void          qsort(void *, size_t, size_t, int (*)(const void *,
+                  const void *));
+int           rand(void);
+void         *realloc(void *, size_t);
+void          srand(unsigned);
+double        strtod(const char *restrict, char **restrict);
+float         strtof(const char *restrict, char **restrict);
+long          strtol(const char *restrict, char **restrict, int);
+long double   strtold(const char *restrict, char **restrict);
+long long     strtoll(const char *restrict, char **restrict, int);
+unsigned long strtoul(const char *restrict, char **restrict, int);
+unsigned long long strtoull(const char *restrict, char **restrict, int);
+int           system(const char *);
+
+unistd.h
+unsigned int alarm(unsigned int);
+int          brk(void *);
+int          chdir(const char *);
+int          chown(const char *, uid_t, gid_t);
+int          close(int);
+int          dup(int);
+int          dup2(int, int);
+int	         execl(const char *, const char *, ...);
+int          execle(const char *, const char *, ...);
+int          execlp(const char *, const char *, ...);
+int          execv(const char *, char *const []);
+int          execve(const char *, char *const [], char *const []);
+int          execvp(const char *, char *const []);
+void        _exit(int);
+int          fchown(int, uid_t, gid_t);
+int          fchdir(int);
+pid_t        fork(void);
+char        *getcwd(char *, size_t);
+off_t        lseek(int, off_t, int);
+int          nice(int);
+int          pause(void);
+int          pipe(int [2]);
+ssize_t      read(int, void *, size_t);
+int          readlink(const char *, char *, size_t);
+int          rmdir(const char *);
+void        *sbrk(intptr_t);	
+unsigned int sleep(unsigned int);
+char        *ttyname(int);
+int          ttyname_r(int, char *, size_t);
+useconds_t   ualarm(useconds_t, useconds_t);
+int          unlink(const char *);
+int          usleep(useconds_t);
+pid_t        vfork(void);
+ssize_t      write(int, const void *, size_t);
+
+stdio.h
+int      fclose(FILE *);
+int      fflush(FILE *);
+char    *fgets(char *, int, FILE *);
+FILE    *fopen(const char *, const char *);
+int      fprintf(FILE *, const char *, ...);
+size_t   fread(void *, size_t, size_t, FILE *);
+int      fscanf(FILE *, const char *, ...);
+int      fseek(FILE *, long int, int);
+long int ftell(FILE *);
+size_t   fwrite(const void *, size_t, size_t, FILE *);
+int      getc(FILE *);
+int      getchar(void);
+char    *gets(char *);
+void     perror(const char *);
+int      printf(const char *, ...);
+int      putc(int, FILE *);
+int      putchar(int);
+int      puts(const char *);
+void     rewind(FILE *);
+int      scanf(const char *, ...);
+int      snprintf(char *, size_t, const char *, ...);
+int      sprintf(char *, const char *, ...);
+int      sscanf(const char *, const char *, int ...);
+
+string.h
+void    *memccpy(void *, const void *, int, size_t);
+void    *memchr(const void *, int, size_t);
+int      memcmp(const void *, const void *, size_t);
+void    *memcpy(void *, const void *, size_t);
+void    *memmove(void *, const void *, size_t);
+void    *memset(void *, int, size_t);
+char    *strcat(char *, const char *);
+char    *strchr(const char *, int);
+int      strcmp(const char *, const char *);
+int      strcoll(const char *, const char *);
+char    *strcpy(char *, const char *);
+size_t   strcspn(const char *, const char *);
+char    *strdup(const char *);
+char    *strerror(int);
+size_t   strlen(const char *);
+char    *strncat(char *, const char *, size_t);
+int      strncmp(const char *, const char *, size_t);
+char    *strncpy(char *, const char *, size_t);
+char    *strpbrk(const char *, const char *);
+char    *strrchr(const char *, int);
+size_t   strspn(const char *, const char *);
+char    *strstr(const char *, const char *);
+char    *strtok(char *, const char *);
+char    *strtok_r(char *, const char *, char **);
+size_t   strxfrm(char *, const char *, size_t);
+
+ctype.h
+int   isalnum(int);
+int   isalpha(int);
+int   isascii(int);
+int   isblank(int);
+int   iscntrl(int);
+int   isdigit(int);
+int   isgraph(int);
+int   islower(int);
+int   isprint(int);
+int   ispunct(int);
+int   isspace(int);
+int   isupper(int);
+int   isxdigit(int);
+int   toascii(int);
+int   tolower(int);
+int   toupper(int);
+
+math.h
+double      acos(double);
+double      asin(double);
+double      atan(double);
+double      ceil(double);
+double      cos(double);
+double      erf(double);
+double      erfc(double);
+double      exp(double);
+double      fabs(double);
+double      floor(double);
+double      log(double);
+double      log10(double);
+double      log2(double);
+double      nan(const char *);
+double      pow(double, double);
+double      round(double);
+double      sin(double);
+double      sqrt(double);
+double      tan(double);
+double      trunc(double);
+
+time.h ver https://pubs.opengroup.org/onlinepubs/007908799/xsh/time.h.html para structs
+char      *asctime(const struct tm *);
+char      *asctime_r(const struct tm *, char *);
+clock_t    clock(void);
+int        clock_getres(clockid_t, struct timespec *);
+int        clock_gettime(clockid_t, struct timespec *);
+int        clock_settime(clockid_t, const struct timespec *);
+char      *ctime(const time_t *);
+char      *ctime_r(const time_t *, char *);
+double     difftime(time_t, time_t);
+struct tm *getdate(const char *);
+struct tm *gmtime(const time_t *);
+struct tm *gmtime_r(const time_t *, struct tm *);
+struct tm *localtime(const time_t *);
+struct tm *localtime_r(const time_t *, struct tm *);
+time_t     mktime(struct tm *);
+int        nanosleep(const struct timespec *, struct timespec *);
+size_t     strftime(char *, size_t, const char *, const struct tm *);
+char      *strptime(const char *, const char *, struct tm *);
+time_t     time(time_t *);
+int        timer_create(clockid_t, struct sigevent *, timer_t *);
+int        timer_delete(timer_t);
+int        timer_gettime(timer_t, struct itimerspec *);
+int        timer_getoverrun(timer_t);
+int        timer_settime(timer_t, int, const struct itimerspec *,
+               struct itimerspec *);
+void       tzset(void);
+
+assert.h //Como macro y como función, usando define NDEBUG
+void assert(int expression);
+
+signal.h
+int    kill(pid_t, int);
+int    killpg(pid_t, int);
+int    pthread_kill(pthread_t, int);
+int    pthread_sigmask(int, const sigset_t *, sigset_t *);
+int    raise(int);
+int    sigaction(int, const struct sigaction *restrict,
+           struct sigaction *restrict);
+int    sigaddset(sigset_t *, int);
+int    sigdelset(sigset_t *, int);
+int    sigemptyset(sigset_t *);
+int    sigfillset(sigset_t *);
+int    sighold(int);
+int    sigignore(int);
+int    siginterrupt(int, int);
+int    sigismember(const sigset_t *, int);
+void (*signal(int, void (*)(int)))(int);
+int    sigpause(int);
+int    sigpending(sigset_t *);
+int    sigprocmask(int, const sigset_t *restrict, sigset_t *restrict);
+int    sigqueue(pid_t, int, const union sigval);
+int    sigrelse(int);
+void (*sigset(int, void (*)(int)))(int);
+int    sigsuspend(const sigset_t *);
+int    sigtimedwait(const sigset_t *restrict, siginfo_t *restrict,
+           const struct timespec *restrict);
+int    sigwait(const sigset_t *restrict, int *restrict);
+int    sigwaitinfo(const sigset_t *restrict, siginfo_t *restrict);
+
+pthread.h
+int   pthread_attr_destroy(pthread_attr_t *);
+int   pthread_attr_init(pthread_attr_t *);
+int   pthread_cancel(pthread_t);
+int   pthread_cond_destroy(pthread_cond_t *);
+int   pthread_cond_init(pthread_cond_t *, const pthread_condattr_t *);
+int   pthread_cond_signal(pthread_cond_t *);
+int   pthread_cond_timedwait(pthread_cond_t *, 
+          pthread_mutex_t *, const struct timespec *);
+int   pthread_cond_wait(pthread_cond_t *, pthread_mutex_t *);
+
+int   pthread_create(pthread_t *, const pthread_attr_t *,
+          void *(*)(void *), void *);
+void  pthread_exit(void *);
+int   pthread_join(pthread_t, void **);
+int   pthread_key_create(pthread_key_t *, void (*)(void *));
+int   pthread_key_delete(pthread_key_t);
+int   pthread_mutex_destroy(pthread_mutex_t *);
+int   pthread_mutex_init(pthread_mutex_t *, const pthread_mutexattr_t *);
+int   pthread_mutex_lock(pthread_mutex_t *);
+int   pthread_mutex_trylock(pthread_mutex_t *);
+int   pthread_mutex_unlock(pthread_mutex_t *);
