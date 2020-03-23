@@ -21,3 +21,4 @@ Preguntas:
 
 Appendix: https://www.amd.com/system/files/TechDocs/24593.pdf 
 Es bastante mas simple que el manual de Intel
+https://blog.ghaiklor.com/2017/11/02/how-to-implement-a-second-stage-boot-loader/
