@@ -1,6 +1,6 @@
+//WORK IN PROGRESS THE DESCRIPTIONS ARE INCOMPLETE
 
 //FILE OPERATIONS
-
 
 FILE * fopen(const char * path,const char * mode);
 /*Opens the file that corresponds to the path, in the specified mode and returns a pointer to it
@@ -35,7 +35,7 @@ void * getablock(FILE * file,blk_num_t blk_num);
    If a non-existing block is requested, the block will be generated in memory like the others. When the flush occurs
    the new block will be added to the file in the filesystem. A block is considered in existence if is present in
    main memory OR in the filesystem.
-   MORE INFO WILL BE WRITTEN IN A ANNEX
+   MORE INFO WILL BE WRITTEN IN AN ANNEX
    PARAMETERS:
    (FILE *) file : the file where the requested abstract block stays.
    (blk_num_t) blk_num : the requested block (from 0)
@@ -51,23 +51,71 @@ void flush();
  */
 
 //DIRECTORY OPERATIONS
-DIR * opendir(char * path);
-/**/ (Me estoy tomando un descanso vuelvo en un ratillo)
+DIR * opendir(const char * path);
+/* Opens a directory returning an abstract data structure representing it
+   PARAMETERS:
+   (char *) path : the abstract path of the objective represented by a string
+   RETURNS:
+   DIR * : NULL if error, a direction to the new DIR structure if succesful
+ */
 
 struct dirent * readdir(DIR * directory);
-/**/
+/* Extracts an entry of the directory aimed by a read pointer and moves the read pointer to the next entry
+   PARAMETERS:
+   (DIR *) directory : the directory strucure where the entries will be read
+   RETURNS:
+   struct dirent : NULL if error or end of directory, or the following struct (Susceptible to expansion (Suggestions are welcome)):
+          struct dirent {
+             char * d_name; (This is the only field that is actually needed, other information can be extracted from this)
+             ...
+          }
+ */
 
 void closedir(DIR * directory);
-/**/
+/* Closes the directory represented by the DIR strucure provided.
+   PARAMETERS:
+   (DIR *) directory : the structure stated before.
+   RETURNS:
+ */
 
 int mkdir(const char * path,mode_t mode);
-/**/
+/* Creates a new directory whose path shall be the string provided as argument
+   PARAMETERS:
+   (const char *) path : the path of the new directory if is not a valid path an error will be generated
+   (mode_t) mode : the permissions that correspond to the new directory in the moment of its creation
+   RETURNS:
+   int : 0 if succesful, something else means an error or a restricted operation
+ */
 
 //GLOBAL OPERATIONS
 
 int stat(const char * path, struct stat * buf);
-/**/
+/* Gives to the caller the meta-information of an abstract filesystem object (like a file or a directory) if it is possible
+   PARAMETERS:
+   (const char * path) : the path of the objective (if not valid an error will be generated)
+   (struct stat * buf) : a direction to a memory space ready to be filled with the requested data as an struct stat
+   RETURNS:
+   int : 0 if succesful, something else means an error or a restricted operation
+   THE STAT STRUCT:
+      struct stat {
+         NOT DEFINED YET
+         DATA TO BE EXPECTED:
+            - File name
+            - File type
+            - Size
+            - User
+            - Permissions
+            - Modification data
+            ...
+      }
+ */
 
 int chmod(const char * path,mode_t mode);
-/**/
+/* This function rewrites the permissions of a file as stated in the mode argument if possible
+   PARAMETERS:
+   (const char *) path : the path of the objective (if not valid an error will be generated)
+   (mode_t) mode : the new set of permissions (macros will be defined for the construction of this field)
+   RETURNS:
+   int : 0 if succesful, something else means an error or a restricted operation
+ */
 
