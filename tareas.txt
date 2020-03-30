@@ -1,0 +1,36 @@
+TAREAS (WIP):
+* SISTEMA DE FICHEROS LÓGICO:
+  Estructuras:
+    -Superblock
+    -Lista de inodos
+    -Lista de bloques libres
+    -Zona de datos
+  Algoritmos:
+    -Creación y apertura de ficheros y directorios
+    -Eliminación de ficheros y directorios
+    -Lectura y escritura de directorios
+    -Lectura y escritura de ficheros
+    -Lectura y escritura de metadatos y información del sistema
+    -Cambio de localización
+* GESTOR MBR:
+    -Lector de particiones
+* AFS:
+  Estructuras:
+    -Tabla de particiones
+    -Estrucutura de montaje
+    -FILE global
+    -DIR
+    -Indice de bloques abstractos (Buffer Cache Index)
+    -Buffer cache I (Alojamiento)
+    -Buffer cache II (Liberación)
+  Alto nivel:
+    -fopen y fclose
+    -getablock y freeablock
+    -stat y chmod
+    -opendir, closedir y readdir
+  Nivel medio:
+    -AFS daemon
+    -Manejo de concurrencia activo
+    -Manejo de concurrencia pasivo
+    -Puente de metadatos
+    -Sistema de identificación de ficheros
