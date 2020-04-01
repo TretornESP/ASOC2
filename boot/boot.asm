@@ -31,12 +31,18 @@ dw 0xaa55
 %include "32bits-switch.asm"
 %include "32bits-gdt.asm"
 %include "32bits-print.asm"
+%include "64bits-detect.asm"
+%include "64bits-switch.asm"
 
 [bits 32]
 BEGIN_PM: ; after the switch we will get here
     mov bx, MSG_PROT_MODE
     call print_string_pm
+    call detect_lm
+
+BEGIN_LM:
+    mov dword [0xb8000], 0x2f4b2f4f
     jmp $
 
 MSG_PROT_MODE db "Loaded 32-bit protected mode", 0
-MSG_2ND_SECT db "2nd sector loaded", 0
+MSG_LONG_MODE db "Loaded 64-bit long mode", 0
