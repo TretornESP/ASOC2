@@ -1,21 +1,26 @@
 #include <stdio.h>
 #include "memoria.h"
 #include <sys/time.h>
+#include <stdlib.h>
 
 int main() {
+    struct timeval end, start;
+    initIndex();
+    srand(time(NULL));
+    void* beeb[300];
 
-    struct timeval end,start;
     gettimeofday(&start, NULL);
 
-    initIndex();
-    _malloc(5000);
-    char * p = _malloc(1);
-    //printIndex();
-    //printf("%p\n", p);
-    _free(p);
-    //printIndex();
+    for (int i = 0; i < 300; i++) beeb[i] = palloc(rand() % 10000);
+    for (int i = 0; i < 100; i++) {
+        int b = rand() % 300;
+        if(beeb[b] != NULL) _free(beeb[b]);
+        beeb[b] = NULL;
+    }
+    for (int i = 0; i < 300; i++) beeb[i] = palloc(rand() % 10000);
 
     gettimeofday(&end, NULL);
-    printf("\nTask took %luus", ((end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec - start.tv_usec));
+    printIndex();
+    printf("\nTask took %luus\n", ((end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec - start.tv_usec));
     return 0;
 }
