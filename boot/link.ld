@@ -8,24 +8,21 @@ SECTIONS
     . = 0x7C00;
     .text : {
         /* Place the code in hw.o before all other code */
-        boot.o(.text);
+        *(.boot);
         *(.text);
     }
+	
+	.rodata : SUBALIGN(4) {
+		*(.rodata);
+	}
 
     /* Place the data after the code */
     .data : SUBALIGN(4) {
         *(.data);
-        *(.rodata);
-    }
-
-    /* Place the boot signature at VMA 0x7DFE */
-    .sig : AT(0x7DFE) {
-        SHORT(0xaa55);
     }
 
     /* Place the uninitialised data in the area after our bootloader
      * The BIOS only reads the 512 bytes before this into memory */
-    . = 0x7E00;
     .bss : SUBALIGN(4) {
         __bss_start = .;
         *(COMMON);

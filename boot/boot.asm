@@ -1,11 +1,6 @@
+[section .boot]
 [bits 16]
 [global boot]
-[org 0x7c00]
-
-section .text
-ini:
-	jmp 0:boot
-
 boot:
 	mov [MAIN_DISK], dl
 	mov bp, 0x9000 ; set the stack
@@ -42,7 +37,9 @@ BEGIN_PM: ; after the switch we will get here
 
 BEGIN_LM:
     mov dword [0xb8000], 0x2f4b2f4f
-    jmp $
-
+	extern kmain
+	call kmain
+	jmp $
+	
 MSG_PROT_MODE db "Loaded 32-bit protected mode", 0
 MSG_LONG_MODE db "Loaded 64-bit long mode", 0
