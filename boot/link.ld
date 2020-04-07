@@ -1,7 +1,4 @@
-OUTPUT_FORMAT("elf32-i386");
-/* We define an entry point to keep the linker quiet. This entry point
- * has no meaning with a bootloader in the binary image we will eventually
- * generate. Bootloader will start executing at whatever is at 0x07c00 */
+OUTPUT_FORMAT("binary");
 ENTRY(boot);
 SECTIONS
 {
