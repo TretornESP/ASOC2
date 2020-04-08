@@ -1,6 +1,4 @@
 rm *.o *.bin *.elf
-nasm -f elf32 boot.asm -o boot.o 
-gcc -ffreestanding -m32 -c kernel.c -o kernel.o
-ld -melf_i386 -T link.ld kernel.o boot.o -o kernel.elf
-objcopy -O binary kernel.elf kernel.bin
-qemu-system-i386 -fda kernel.bin
+nasm -f elf64 boot2.asm -o boot.o 
+gcc -ffreestanding -nostdlib -mno-red-zone -fno-exceptions -m64 kernel.c boot.o -o kernel.bin -T link.ld
+qemu-system-x86_64 -fda kernel.bin -cpu qemu64 -d page
