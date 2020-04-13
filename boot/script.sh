@@ -1,4 +1,5 @@
-rm *.o *.bin *.elf
-nasm -f elf64 boot2.asm -o boot.o 
-gcc -ffreestanding -nostdlib -mno-red-zone -fno-exceptions -m64 kernel.c boot.o -o kernel.bin -T link.ld
-qemu-system-x86_64 -fda kernel.bin -cpu qemu64 -d page
+rm obj/*.o bin/*.bin
+nasm -f elf64 boot.asm -o obj/boot.o
+nasm -f elf64 cpu/int.s -o obj/int.o
+nasm -f elf64 cpu/cpu.s -o obj/cpu.o
+gcc -ffreestanding -nostdlib -mno-red-zone -fno-exceptions -m64 kernel.c cpu/*.c mem/*.c lib/*.c obj/*.o -o bin/kernel.bin -T link.ld

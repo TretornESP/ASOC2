@@ -7,7 +7,7 @@ SECTIONS
         *(.boot);
         *(.text);
     }
-
+	
     .rodata : SUBALIGN(4) {
         *(.rodata);
     }

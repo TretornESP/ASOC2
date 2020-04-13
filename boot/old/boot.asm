@@ -32,6 +32,7 @@ dw 0xaa55
 switch_to_pm:
     cli ; 1. disable interrupts
     lgdt [gdt_descriptor] ; 2. load the GDT descriptor
+    lidt [idt_entry]
     mov eax, cr0
     or eax, 0x1 ; 3. set 32-bit mode bit in cr0
     mov cr0, eax
@@ -52,24 +53,18 @@ switch_to_pm:
 		mov ebp, 0x90000 ; 6. update the stack right at the top of the free space
 		mov esp, ebp
 
-		in al, 0x92 ;Enable a20 gate
-		test al, 2
-		jnz after
-		or al, 2
-		and al, 0xFE
-		out 0x92, al
-	after:
 		call BEGIN_PM ; 7. Call a well-known label with useful code
 
+
+%include "32bits-print.asm"
+
+
+[bits 32]
 BEGIN_PM: ; after the switch we will get here
     mov bx, MSG_PROT_MODE
     call print_string_pm
     call detect_lm
 
-%include "32bits-print.asm"
-%include "64bits-switch.asm"
-
-[bits 64]
 BEGIN_LM:
     extern kmain
     call kmain
