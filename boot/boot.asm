@@ -39,11 +39,11 @@ BEGIN_PM: ; after the switch we will get here
 
 BEGIN_LM:
     mov dword [0xb8000], 0x2f4b2f4f
-    mov esp,kernel_stack_top
-    mov ebp, esp
+    ;mov esp,kernel_stack_top
+    ;mov ebp, esp
     extern kmain
     call kmain
-    jmp $
+    
 	
 MSG_PROT_MODE db "Loaded 32-bit protected mode", 0
 MSG_LONG_MODE db "Loaded 64-bit long mode", 0

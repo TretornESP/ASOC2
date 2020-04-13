@@ -22,3 +22,10 @@ Preguntas:
 Appendix: https://www.amd.com/system/files/TechDocs/24593.pdf 
 Es bastante mas simple que el manual de Intel
 https://blog.ghaiklor.com/2017/11/02/how-to-implement-a-second-stage-boot-loader/
+
+
+Lugares donde sacamos lo de la IDT:
+
+Load IDT: http://www.osdever.net/bkerndev/Docs/idt.htm
+ISRS: http://www.osdever.net/bkerndev/Docs/isrs.htm
+IRQ: http://www.osdever.net/bkerndev/Docs/irqs.htm
