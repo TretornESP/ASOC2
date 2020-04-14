@@ -22,9 +22,9 @@ first_stage:
 
 MSG_REAL_MODE db "Started in 16-bit real mode", 0
 
-%include "disk.asm"
-%include "print.asm"
-%include "print_hex.asm"
+%include "asm/disk.asm"
+%include "asm/print.asm"
+%include "asm/print_hex.asm"
 
 times 510-($-$$) db 0
 dw 0xaa55
@@ -37,8 +37,8 @@ switch_to_pm:
     mov cr0, eax
     jmp CODE_SEG:init_pm ; 4. far jump by using a different segment
 
-%include "32bits-gdt.asm"
-%include "32bits-idt.asm"
+%include "asm/32bits-gdt.asm"
+%include "asm/32bits-idt.asm"
 
 [bits 32]
 	init_pm: ; we are now using 32-bit instructions
@@ -66,8 +66,8 @@ BEGIN_PM: ; after the switch we will get here
     call print_string_pm
     call detect_lm
 
-%include "32bits-print.asm"
-%include "64bits-switch.asm"
+%include "asm/32bits-print.asm"
+%include "asm/64bits-switch.asm"
 
 [bits 64]
 BEGIN_LM:
