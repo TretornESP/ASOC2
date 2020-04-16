@@ -1,3 +1,24 @@
+#include <SleepList.h>
+#include <ProcList.h>
+
+// Process' states
+
+#define NEW                  0
+#define READY                1
+#define RUNNING              2
+#define WAITING              3
+#define TERMINATED           4
+
+// Define if a process is interrumtable by software
+#define TASK_UNINTERRUPTIBLE 0
+#define TASK_INTERRUPTIBLE   1
+
+
+// Interrupts identifiers
+#define ITR_IO_COMP          0
+#define ITR_WAIT_BUFF        1
+#define ITR_WAIT_TTY_INPUT   2
+
 
 typedef struct{
 
@@ -14,15 +35,12 @@ typedef struct{
     int uid;                    // User id
     int pid;                    // Process id
     Proc * parent;              // Parent process
-    Context * u_context;        // Context of the process in user mode
-    Context * k_context;        // Context of the process in kernel mode
-    int awake;                  // 0 awake 1 sleep
     int nice;                   // Scheduling parameters
     Signals *signals;           // List of signals received but not processed
     Process_timer timers;       // Accounting
 } Proc;
 
-typedef Proc  *Process_table;   // Table that contains all processes
+typedef Proc  **Process_table;  // Table that contains all processes
 
 /*  SLEEP
     Set the process to sleep mode, also adds it to a list that contains all processes in that state.
