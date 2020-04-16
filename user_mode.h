@@ -7,7 +7,7 @@ typedef struct{
 } Process_timer;
 
 typedef struct{
-    Process_info * process;        // Pointer to the start of the entry that matches this proccess in the process table
+    Proc * process;                 // Pointer to the start of the entry that matches this proccess in the process table
     int uid_effective;              // Effective user id
     int uid_real;                   // Real user id
     int user_execution_time;        // User mode CPU time
@@ -20,5 +20,5 @@ typedef struct{
                                     // Current directory,
     int * open_files;               // List of file descriptors opened
                                     // Limit fields that restrict the size of a process and the size of the file they can write.
-                                    // Mask of permissions of the files the process can create.
+                                    // ## Mask of permissions of the files the process can create. ##
 } U_entry;
