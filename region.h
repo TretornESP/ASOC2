@@ -6,7 +6,7 @@ typedef struct{
     int r_type;                     // The region type (text, private data or stack)
     int r_shared;                   // Indicates that is or not shared memory
     int r_size;                     // The size of the region
-    int r_loc;                      // The location of the region in physical memory
+    char * r_loc;                   // The location of the region in physical memory
     int r_status;                   // The status of a region, which may be a combination of
                                     //      locked
                                     //      in demand
