@@ -24,9 +24,9 @@ int sleep ( int itr , Proc *proc , int priority ){
     if(!process_to_sleep(proc))                   	    // Put a process to sleep
         return 0;
     
-    insert_List(list, proc, itr);                    	// Adds the process to the slept processes list
+    itr_table_insert(list, proc, itr);                    	// Adds the process to the slept processes list
 
-    if (!setPriority_process(priority,proc)){
+    if (!process_set_priority(priority,proc)){
         perror("Priority could not be changed.\n");
     }
 
@@ -40,13 +40,13 @@ int sleep ( int itr , Proc *proc , int priority ){
     if (proc->signals == NULL){                     	// No signal pending against the process
         switch_context();                           	// Process resumes the execution when it wakes up 
         if (proc->signals == NULL){
-            setPriority_process(priority,proc);
+            process_set_priority(priority,proc);
             return 0;
         }
     }
 
-    if(search_itr_proc(list,proc,itr)){
-        remove_proc(list,proc,itr);                    		// Removes the process from the list
+    if(itr_table_search(list,proc,itr)){
+        itr_table_remove(list,proc,itr);                    		// Removes the process from the list
     }
 
     if(proc->is_interrumpable == PROCESS_UNINTERRUPTIBLE) {
@@ -65,7 +65,7 @@ int process_to_sleep(Proc *proc){
     return toret;
 }
 
-int setPriority_process (int priority , Proc *proc ){
+int process_set_priority (int priority , Proc *proc ){
 	int toret = 0;
 	proc->priority = priority;
 
@@ -77,16 +77,24 @@ int setPriority_process (int priority , Proc *proc ){
 	return toret;
 }
 
-void wake_up (Proc *proc){
-    
-    pushcli();                                      // Blocks all interruptions
-    remove_sleepList(proc,list);                    // Removes the process from the list 
-    proc->state = READY_TO_RUN;                     // Set the process state for READY_TO_RUN
-    insert_schedulerList(process);                  // Linked List Elligible process
-    if(proc->state == ASLEEP){                      // If the process is asleep, but isn't allocated in memory
-        swap_in(proc);                              // Kernel swap the process into RAM
-    } else{
-        scheduler();                                // Decide which process to run after waking this one up
-    } 
-    popcli();                                       // Unblock all interrupts
+void wakeup (itr_table *sleep_list ,int itr, Proc* current){
+    Proc *proc;
+    cli();  //raise processor execution level to block all interrupts
+    if(!itr_table_empty (sleep_list, itr)){    /*sleepQ = findHashQ(addr);*/  //find sleep hash queue for sleep address
+        for(int i = 0; i<sleep_list.size; i++){    //for every process in the sleep hash queue ->
+            proc = sleep_list-> itr[itr] ->proc[i];
+            if(proc->state == ASLEEP){         ¡// -> that is asleep
+                proc->state=READY_TO_RUN;
+                insert_schedulerList(proc);
+                itr_table_remove(sleep_list, proc, itr);
+                if(!table_proc_search(proc)){ //el proceso no esta en memoria  ACORDARSE CAMBIAR CUANDO SEARCH
+                    swap_in(proc);  // Kernel swap the process into RAM
+                }else if(proc->priority < current->priority){  /*procesp actual es mas elegible para correr (prioridad mas alta)*/
+                    set_scheduler_flag();    //set scheduler flag to indicate which is more eligible
+                }
+            }
+        }
+    }   
+    sti();   //restore processor's original exe lvl (Unblock all interrupts)
+
 }
