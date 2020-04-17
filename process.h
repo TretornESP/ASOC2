@@ -1,3 +1,4 @@
+#include <process_list.h>
 #include <sleep_list.h>
 
 // Process' states
@@ -43,7 +44,12 @@ typedef struct{
     Process_timer timers;       // Accounting
 } Proc;
 
-typedef Proc  **Process_table;  // Table that contains all processes
+Process_table table;            // Table that contains all processes
+Itr_table list;                 // Table incluing all asleep processes grouped by interruptions
+
+int process_to_sleep(Proc *proc);
+
+int process_set_priority(int priority , Proc *proc );
 
 /*  SLEEP
     Set the process to sleep mode, also adds it to a list that contains all processes in that state by the same interruption.

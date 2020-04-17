@@ -15,6 +15,68 @@ they will be in the ASLEEP_IN_MEM state.
 
 */
 
+extern void cli();                                      // Blocks all incoming interruptions
+extern void sti();                                      // Unblocks interruptions
+
+
+int sleep ( int itr , Proc *proc , int priority ){
+    cli();												//Block all interrumptions Hardware
+    if(!process_to_sleep(proc))                   	    // Put a process to sleep
+        return 0;
+    
+    insert_List(list, proc, itr);                    	// Adds the process to the slept processes list
+
+    if (!setPriority_process(priority,proc)){
+        perror("Priority could not be changed.\n");
+    }
+
+    if (!pro->is_interrumpable){                     
+        switch_context();                           	// Process resumes the execution when it wakes up   
+        pro->is_interrumpable = TASK_INTERRUPTIBLE	    // Unblocks all interruptions
+        sti();											// unlock hardware Interrupts
+        return 0;
+    }
+
+    if (proc->signals == NULL){                     	// No signal pending against the process
+        switch_context();                           	// Process resumes the execution when it wakes up 
+        if (proc->signals == NULL){
+            setPriority_process(priority,proc);
+            return 0;
+        }
+    }
+
+    if(search_itr_proc(list,proc,itr)){
+        remove_proc(list,proc,itr);                    		// Removes the process from the list
+    }
+
+    if(proc->is_interrumpable == TASK_INTERRUPTIBLE) {
+        return 1;
+    }                      
+}
+
+int process_to_sleep(Proc *proc){
+    int toret = 0;
+    proc->state = WAITING;
+    if (proc == WAITING){
+        toret = 1;
+    }else {
+        perror("The process did not go to sleep.\n");
+    }
+    return toret;
+}
+
+int setPriority_process (int priority , Proc *proc ){
+	int toret = 0;
+	proc->priority = priority;
+
+	if (proc->priority == priority){
+		toret = 1;
+	}else {
+        perror("The priority process could not be changed.\n");
+    }
+	return toret;
+}
+
 int sleep (  Proc *proc , int priority ){
 
     pushcli();                                      // Blocks all interruptions
