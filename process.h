@@ -1,4 +1,3 @@
-#include <process_list.h>
 #include <sleep_list.h>
 
 // Process' states
@@ -45,9 +44,28 @@ typedef struct{
 } Proc;
 
 Process_table table;            // Table that contains all processes
-Itr_table list;                 // Table incluing all asleep processes grouped by interruptions
+Itr_table list;                 // Table incluing all proceses
+
+/*  PROCESS_TO_SLEEP
+    Set the process state sleep mode and returns if it was done successfully.
+    PARAMETERS:
+        Proc * proc     : Pointer to the process you want to change state sleep
+
+    RETURNS:
+        int             : Returns 0 if the process has been slept sucessfully, otherwise sends 1.
+*/
 
 int process_to_sleep(Proc *proc);
+
+/*  PROCESS_SET_PRIORITY
+    Sets the priority of a process to the given one
+    PARAMETERS:
+        Proc * proc     : Pointer to the process you want to sleep
+        int priority    : Priority you want to set the process to
+
+    RETURNS:
+        int             : Returns 0 if the process has been slept sucessfully, otherwise sends 1.
+*/
 
 int process_set_priority(int priority , Proc *proc );
 
