@@ -15,5 +15,6 @@ Process_table create_table();
 void table_proc_insert(Process_table* table, Proc *proc);
 int table_proc_empty(Process_table table);
 void table_proc_remove(Process_table table);
+int itr_table_search (Itr_table list , Proc *proc, int itr);
 
 #endif
