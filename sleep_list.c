@@ -1,8 +1,6 @@
 #include "sleep_list.h"
 
-/*usar custom malloc. custom free*/
-
-Itr_table itr_table_create(){
+Itr_table * itr_table_create(){
 	int i;
 	Itr_table* list = malloc(sizeof(ITR_SIZE * Node));
 
@@ -21,7 +19,7 @@ int itr_table_empty (Itr_table list , int itr){
 
 void itr_table_insert (Itr_table *list, Proc *proc , int itr){
 
-	if(list[i]->size < MAX_SIZE_ITR){
+	if(list[i]->size < MAX_ITR_SIZE){
 		Itr_proc *current = list[i]->itr;
 		Itr_proc aux = malloc (sizeof(Itr_proc));
 		aux->proc= proc;
