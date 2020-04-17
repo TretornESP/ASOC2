@@ -115,7 +115,7 @@ switch_to_lm_enable_paging:
   MSG_NO_CPUID db "No CPUID", 0
   MSG_NO_LONG_MODE db "No Long Mode", 0
 
-  %include "64bits-gdt.asm"
+  %include "asm/64bits-gdt.asm"
 
 [bits 64]
 

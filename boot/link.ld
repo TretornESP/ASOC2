@@ -16,6 +16,10 @@ SECTIONS
         *(.data);
     }
 
+    .stack : SUBALIGN(4) {
+      *(.stack);
+    }
+
     .bss : SUBALIGN(4) {
         *(.bss)
     }

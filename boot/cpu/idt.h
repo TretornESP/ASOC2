@@ -37,4 +37,7 @@ extern uint64_t _asm_exc_GP;
 extern uint64_t _asm_schedule;
 extern uint64_t _asm_syscalls;
 extern uint64_t _asm_int_1;
+
+extern void sti();
+extern void cli();
 #endif

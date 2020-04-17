@@ -5,25 +5,21 @@
 #include "lib/screen.h"
 
 void setup() {
+	vga_print("GDT LOADING \0");
 	gdt_init();
-	*(vga_ptr++) = 'g';
-	*(vga_ptr++) = 0x0f;
+	vga_print("GDT LOADED \0");
+	vga_print("TSS LOADING \0");
 	tss_init();
-	*(vga_ptr++) = 't';
-	*(vga_ptr++) = 0x0f;
+	vga_print("TSS LOADED \0");
+	vga_print("IDT LOADING \0");
 	idt_init();
+	vga_print("IDT LOADED \0");
 }
 
 void kmain() {
 	vga_init();
-	*(vga_ptr++) = 0x0f;
-	*(vga_ptr++) = 'v';
+
 	setup();
-	*(vga_ptr++) = 0x0f;
-	*(vga_ptr++) = 'H';
-	*(vga_ptr++) = 0x0f;
-	*(vga_ptr++) = 'e';
-	*(vga_ptr++) = 0x0f;
-	*(vga_ptr++) = 'y';
+	vga_print("HEY DUDE IM READY \0");
 	while (1);
 }

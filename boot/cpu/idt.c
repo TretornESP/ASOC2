@@ -45,6 +45,7 @@ void load_idt_entry(uint16_t selector, uint64_t offset, uint16_t type, struct id
 
 
 void idt_init() {
+  cli();
   for (int i = 0; i < IDTSIZE; i++)
       load_idt_entry(0x08, (uint32_t)_asm_schedule, INTGATE, &IDT[i]);
 
@@ -63,6 +64,7 @@ void idt_init() {
   memcpy((char *) IDTR.base, (char *) IDT, IDTR.limit);
 
   idt_load();
+  sti();
 }
 
 void do_syscalls() {}

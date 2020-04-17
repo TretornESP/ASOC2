@@ -11,8 +11,8 @@ global tss_load
 extern TSS
 tss_load:
   push rax
-  mov ax, TSS
-  ltr ax
+  mov eax, TSS
+  ltr [eax]
   pop rax
   ret
 
