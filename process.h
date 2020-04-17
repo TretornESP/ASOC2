@@ -2,15 +2,18 @@
 
 // Process' states
 
-#define NEW                  0
-#define READY                1
-#define RUNNING              2
-#define WAITING              3
-#define TERMINATED           4
+#define CREATED             0   // Process when just got created
+#define READY_TO_RUN        1   // Ready to be scheduled
+#define KERNEL_RUNNING      2   // Running on kernel space
+#define USER_RUNNING        3   // Running on user space
+#define PREMPTED            4   // Stopped by an interruption
+#define ASLEEP              5   //  
+#define ZOMBIE              6   // Process that was exited
+#define TERMINATED          7   // Process ended normally    
 
-// Define if a process is interrumtable by software
-#define TASK_UNINTERRUPTIBLE 0
-#define TASK_INTERRUPTIBLE   1
+// Define if the process is interrumtable by software
+#define PROCESS_UNINTERRUPTIBLE 0
+#define PROCESS_INTERRUPTIBLE   1
 
 
 // Interrupts identifiers
@@ -35,6 +38,7 @@ typedef struct{
     int pid;                    // Process id
     Proc * parent;              // Parent process
     int nice;                   // Scheduling parameters
+    int is_interrumptable;      // 1 interrumptable, 0 not interrumptable
     Signals *signals;           // List of signals received but not processed
     Process_timer timers;       // Accounting
 } Proc;
@@ -42,10 +46,12 @@ typedef struct{
 typedef Proc  **Process_table;  // Table that contains all processes
 
 /*  SLEEP
-    Set the process to sleep mode, also adds it to a list that contains all processes in that state.
+    Set the process to sleep mode, also adds it to a list that contains all processes in that state by the same interruption.
     PARAMETERS:
+        int itr         : Identifier of the interruption
         Proc * proc     : Pointer to the process you want to sleep
-        int priority    : Priority of the process 
+        int priority    : Priority of the process
+
         
         * The priority it may get removed since we have a similar field in Proc (nice field) which can do the same job.
 
@@ -53,7 +59,7 @@ typedef Proc  **Process_table;  // Table that contains all processes
         int             : Returns 0 if the process has been slept sucessfully, otherwise sends 1.
 */
 
-int sleep (  Proc * proc , int priority );
+int sleep ( int itr, Proc * proc , int priority );
 
 /*  WAKE_UP
     Removes the process from the asleep process list and changes it to be ready to run or awaken
