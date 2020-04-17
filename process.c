@@ -32,7 +32,7 @@ int sleep ( int itr , Proc *proc , int priority ){
 
     if (!pro->is_interrumpable){                     
         switch_context();                           	// Process resumes the execution when it wakes up   
-        pro->is_interrumpable = TASK_INTERRUPTIBLE	    // Unblocks all interruptions
+        pro->is_interrumpable = PROCESS_UNINTERRUPTIBLE	    // Unblocks all interruptions
         sti();											// unlock hardware Interrupts
         return 0;
     }
@@ -49,15 +49,15 @@ int sleep ( int itr , Proc *proc , int priority ){
         remove_proc(list,proc,itr);                    		// Removes the process from the list
     }
 
-    if(proc->is_interrumpable == TASK_INTERRUPTIBLE) {
+    if(proc->is_interrumpable == PROCESS_UNINTERRUPTIBLE) {
         return 1;
     }                      
 }
 
 int process_to_sleep(Proc *proc){
     int toret = 0;
-    proc->state = WAITING;
-    if (proc == WAITING){
+    proc->state = ASLEEP;
+    if (proc == ASLEEP){
         toret = 1;
     }else {
         perror("The process did not go to sleep.\n");
@@ -75,29 +75,6 @@ int setPriority_process (int priority , Proc *proc ){
         perror("The priority process could not be changed.\n");
     }
 	return toret;
-}
-
-int sleep (  Proc *proc , int priority ){
-
-    pushcli();                                      // Blocks all interruptions
-    process_to_sleep(proc);                         // Put a process to sleep 
-    insert_sleepList(proc,list);                    // Adds the process to the slept processes list
-
-    if (process is not interrumptable){                     
-        switch_context();                           // Process resumes the execution when it wakes up   
-        popcli();                                   // Unblocks all interruptions
-        return 0;
-    }
-
-    if (proc->signals == NULL){                     // No signal pending against the process
-        switch_context();                           // Process resumes the execution when it wakes up 
-    }
-
-    remove_sleepList(proc,list);                    // Removes the process from the list
-
-    if(proc->state == AWAKEN) return 1;
-    
-    longjmp_algorithm();                        
 }
 
 void wake_up (Proc *proc){
