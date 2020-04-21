@@ -5,8 +5,6 @@
 #define ITR_SIZE             3  // Amount of interruptions
 #define MAX_ITR_SIZE            // Max amount of processes stopped by a single interruption
 
-/* It works as a queue thinking of switching stack.*/
-
 /*
     The following structures are implementing a linked list that acts as a stack
     to store the processes that are asleep, grouping them by the interrupt that caused

@@ -15,30 +15,30 @@ they will be in the ASLEEP_IN_MEM state.
 
 */
 
-extern void cli();                                      // Blocks all incoming interruptions
-extern void sti();                                      // Unblocks interruptions
+extern void cli();                                              // Blocks all incoming interruptions
+extern void sti();                                              // Unblocks interruptions
 
 
 int sleep ( int itr , Proc *proc , int priority ){
-    cli();												//Block all interrumptions Hardware
-    if(!process_to_sleep(proc))                   	    // Put a process to sleep
+    cli();												        //Block all interrumptions Hardware
+    if(!process_to_sleep(proc))                   	            // Put a process to sleep
         return 0;
     
-    itr_table_insert(list, proc, itr);                    	// Adds the process to the slept processes list
+    itr_table_insert(list, proc, itr);                    	    // Adds the process to the slept processes list
 
     if (!process_set_priority(priority,proc)){
         perror("Priority could not be changed.\n");
     }
 
     if (!pro->is_interrumpable){                     
-        switch_context();                           	// Process resumes the execution when it wakes up   
-        pro->is_interrumpable = PROCESS_UNINTERRUPTIBLE	    // Unblocks all interruptions
-        sti();											// unlock hardware Interrupts
+        switch_context();                           	        // Process resumes the execution when it wakes up   
+        pro->is_interrumpable = PROCESS_UNINTERRUPTIBLE	        // Unblocks all interruptions
+        sti();											        // unlock hardware Interrupts
         return 0;
     }
 
-    if (proc->signals == NULL){                     	// No signal pending against the process
-        switch_context();                           	// Process resumes the execution when it wakes up 
+    if (proc->signals == NULL){                     	        // No signal pending against the process
+        switch_context();                           	        // Process resumes the execution when it wakes up 
         if (proc->signals == NULL){
             process_set_priority(priority,proc);
             return 0;
@@ -46,7 +46,7 @@ int sleep ( int itr , Proc *proc , int priority ){
     }
 
     if(itr_table_search(list,proc,itr)){
-        itr_table_remove(list,proc,itr);                    		// Removes the process from the list
+        itr_table_remove(list,proc,itr);                        // Removes the process from the list
     }
 
     if(proc->is_interrumpable == PROCESS_UNINTERRUPTIBLE) {
@@ -79,22 +79,22 @@ int process_set_priority (int priority , Proc *proc ){
 
 void wakeup (itr_table *sleep_list ,int itr, Proc* current){
     Proc *proc;
-    cli();  //raise processor execution level to block all interrupts
-    if(!itr_table_empty (sleep_list, itr)){    /*sleepQ = findHashQ(addr);*/  //find sleep hash queue for sleep address
-        for(int i = 0; i<sleep_list.size; i++){    //for every process in the sleep hash queue ->
-            proc = sleep_list-> itr[itr] ->proc[i];
-            if(proc->state == ASLEEP){         ¡// -> that is asleep
-                proc->state=READY_TO_RUN;
-                insert_schedulerList(proc);
-                itr_table_remove(sleep_list, proc, itr);
-                if(!table_proc_search(proc)){ //el proceso no esta en memoria  ACORDARSE CAMBIAR CUANDO SEARCH
-                    swap_in(proc);  // Kernel swap the process into RAM
-                }else if(proc->priority < current->priority){  /*procesp actual es mas elegible para correr (prioridad mas alta)*/
-                    set_scheduler_flag();    //set scheduler flag to indicate which is more eligible
+    cli();                                                      // Raise processor execution level to block all interrupts
+    if(!itr_table_empty (sleep_list, itr)){                     // If there is any process by the interrupt 
+        for(int i = 0; i<sleep_list.size; i++){                 // For every process
+            proc = sleep_list-> itr[itr] ->proc[i];             //    
+            if(proc->state == ASLEEP){                          // If the process is asleep
+                proc->state=READY_TO_RUN;                       //
+                insert_schedulerList(proc);                     // Add the process to the scheduler list
+                itr_table_remove(sleep_list, proc, itr);        // Removes the process from the interruption list with that interrupt
+                if(!table_proc_search(proc)){                   // If it isn't in memory
+                    swap_in(proc);                              // Swap the process in
+                }else if(proc->priority < current->priority){   // Current process is more eligible to run
+                    set_scheduler_flag();                       // Set scheduler flag to indicate which is more eligible
                 }
             }
         }
     }   
-    sti();   //restore processor's original exe lvl (Unblock all interrupts)
+    sti();                                                      // Restore processor's original exe lvl (Unblock all interrupts)
 
 }

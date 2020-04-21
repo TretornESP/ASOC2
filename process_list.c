@@ -1,14 +1,12 @@
 #include <process_list.h>
 
-Process_table create_table(){
+Process_table table_proc_create(){
 	Process_table* table = malloc(sizeof(Node_proc));
 	(*table)->proc = NULL;
 	(*table)->next = NULL;
 	(*table)->num_procs = 0;
 	return table;
 }
-
-// FUNCIONA COMO UNA COLA
 
 void table_proc_insert(Process_table* table, Proc *proc){
 	if(table->num_procs == TABLE_PROC_SIZE){
