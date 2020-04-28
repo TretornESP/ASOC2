@@ -1,17 +1,35 @@
 #include "memoria.h"
 
+#include <stdio.h>
+
+int strcmp(const char *str1, const char *str2) {
+    int i = 0;
+    while (str1[i] == str2[i]) {
+        if (str1[i] == '\0') return 0;
+        i++;
+    }
+    if (str1[i] > str2[i]) return 1;
+    else return -1;
+}
+
+char *strcpy(char *dest, const char *src) {
+    dest[0] = src[0];
+    for (int i = 1; src[i - 1] != '\0'; i++) dest[i] = src[i];
+    return dest;
+}
+
 //Size in bytes
-void *palloc(int size) {
-    int pagesNeeded = size % PAGE_SIZE ? size / PAGE_SIZE + 1 : size / PAGE_SIZE;
-    int currEmpty = 0;
-    for (int i = 0; i < PAGE_NUM; i++) {
-        if (!_index[i].blockStart) {
+void *palloc(m_size size) {
+    m_size pagesNeeded = size % PAGE_SIZE ? size / PAGE_SIZE + 1 : size / PAGE_SIZE;
+    m_size currEmpty = 0;
+    for (m_size i = 0; i < PAGE_NUM; i++) {
+        if (!m_index[i].blockStart) {
             currEmpty++;
             if (currEmpty >= pagesNeeded) {
-                for (int j = 0; j < pagesNeeded; j++) {
-                    _index[i - j].blockStart = _index[i - pagesNeeded + 1].pos;
+                for (m_size j = 0; j < pagesNeeded; j++) {
+                    m_index[i - j].blockStart = m_index[i - pagesNeeded + 1].pos;
                 }
-                return _index[i - pagesNeeded + 1].pos;
+                return m_index[i - pagesNeeded + 1].pos;
             }
         } else currEmpty = 0;
     }
@@ -20,67 +38,91 @@ void *palloc(int size) {
 
 bool _free(void *p) {
     bool reachedPos = false;
-    for (int i = 0; i < PAGE_NUM; i++) {
-        if (_index[i].blockStart == p) {
+    for (m_size i = 0; i < PAGE_NUM; i++) {
+        if (m_index[i].blockStart == p) {
             reachedPos = true;
-            _index[i].blockStart = NULL;
+            m_index[i].blockStart = NULL;
         } else if (reachedPos) return true;
     }
     return reachedPos;
 }
 
-void initIndex() {
-    for (unsigned long i = 0; i < PAGE_NUM; i++) {
-        _index[i].pos = (void *) ((i + 1) * PAGE_SIZE);
-        _index[i].blockStart = NULL;
-        _index[i].lastUsed = 0;
-    }
+void initTable() {
+    first_level_page_table = PHYS_BASE + PAGE_TABLE_START;
+    phys_mapped = PHYS_BASE + CURR_PHYS_MAP;
+
+    void *second_level_page_table = first_level_page_table + sizeof(void *) * 512;
+    void *third_level_page_table = second_level_page_table + sizeof(void *) * 512;
+    pageIndexEntry *fourth_level_page_table = third_level_page_table + sizeof(void *) * 512;
+
+    *(void **) first_level_page_table = second_level_page_table;
+    *(void **) second_level_page_table = third_level_page_table;
+    *(pageIndexEntry **) third_level_page_table = fourth_level_page_table;
+
+    *phys_mapped = (void *) PAGE_SIZE;
 }
 
-void printIndex() {
-    for (int i = 0; i < PAGE_NUM; i++) {
-        printf("Entrada %d\n\tPos: %p\n\tBlockStart: %p\n\tLastUsed: %ld\n\n", i, _index[i].pos, _index[i].blockStart,
-               _index[i].lastUsed);
-    }
-}
-
-void *_shmget(char k[8], size_t s, int flag, int *connections) {
-    int i = 0;
-    for (; i < MAX_SHM_ENTRIES; i++) {
-        if (_shmindex[i].pos == NULL) break;
-        if (strcmp(k, _shmindex[i].key) == 0) {
-            //TODO: Comprobación permisos
-            if (_shmindex[i].connections == 255) {
-                *connections = 255;
-                return NULL;
+void printTable() {
+    printf("\nRoot table (%p)\t|\tPhysical memory base: %p\n", first_level_page_table, PHYS_BASE);
+    for (int i = 0; ((void **) first_level_page_table)[i] != NULL; i++) {
+        printf("|\tTable %d (%p)\n", i, &((void **) first_level_page_table)[i]);
+        void **second_level_page_table = ((void **) first_level_page_table)[i];
+        for (int j = 0; second_level_page_table[j] != NULL; j++) {
+            printf("|\t|\tTable %d-%d (%p)\n", i, j, &second_level_page_table[j]);
+            void **third_level_page_table = second_level_page_table[j];
+            for (int k = 0; third_level_page_table[k] != NULL; k++) {
+                printf("|\t|\t|\tTable %d-%d-%d (%p)\n", i, j, k, &third_level_page_table[k]);
+                pageIndexEntry *fourth_level_page_table = third_level_page_table[k];
+                for (int l = 0; fourth_level_page_table[l].pos != NULL; l++) {
+                    printf("|\t|\t|\t|\tPage %d-%d-%d-%d (%p) | Pos: %p BlockStart: %p LastUsed: %ld\n", i, j, k, l,
+                           &fourth_level_page_table[l], fourth_level_page_table[l].pos,
+                           fourth_level_page_table[l].blockStart,
+                           fourth_level_page_table[l].lastUsed);
+                }
             }
-            _shmindex[i].connections++;
-            *connections = _shmindex[i].connections;
-            return _shmindex[i].pos;
         }
     }
-    if (_shmindex[MAX_SHM_ENTRIES - 1].pos != NULL) {
-        *connections = -1;
+    printf("\n");
+}
+
+void *shmget(char k[8], m_size s, int flag, int *connections) {
+    int i = 0;
+    for (; i < MAX_SHM_ENTRIES; i++) {
+        if (shm_index[i].pos == NULL) break;
+        if (strcmp(k, shm_index[i].key) == 0) {
+            //TODO: Comprobación permisos
+            if (shm_index[i].connections == 255) {
+                if (connections) *connections = 255;
+                return NULL;
+            }
+            shm_index[i].connections++;
+            if (connections) *connections = shm_index[i].connections;
+            return shm_index[i].pos;
+        }
+    }
+    if (shm_index[MAX_SHM_ENTRIES - 1].pos != NULL) {
+        if (connections) *connections = -1;
         return NULL;
     }
-    _shmindex[i].pos = palloc(s);
-    _shmindex[i].connections = 1;
-    *connections = 1;
-    _shmindex[i].flag = flag;
-    strcpy(_shmindex[i].key, k);
-    return _shmindex[i].pos;
+    shm_index[i].pos = palloc(s);
+    shm_index[i].connections = 1;
+    if (connections) *connections = 1;
+    shm_index[i].flag = flag;
+    k[7] = '\0';
+    strcpy(shm_index[i].key, k);
+    return shm_index[i].pos;
 }
 
 bool shmcut(void *p) {
     for (int i = 0; i < MAX_SHM_ENTRIES; i++) {
-        if (_shmindex[i].pos == NULL) break;
-        if (_shmindex[i].pos == p) {
-            _shmindex[i].connections--;
-            if (!_shmindex[i].connections) {
+        if (shm_index[i].pos == NULL) break;
+        if (shm_index[i].pos == p) {
+            shm_index[i].connections--;
+            if (!shm_index[i].connections) {
                 _free(p);
-                for (; i < MAX_SHM_ENTRIES - 1; i++) { _shmindex[i] = _shmindex[i + 1]; }
-                _shmindex[MAX_SHM_ENTRIES - 1].pos = NULL;
-                _shmindex[MAX_SHM_ENTRIES - 1].key[0] = '\0';
+                for (; i < MAX_SHM_ENTRIES - 1; i++) { shm_index[i] = shm_index[i + 1]; }
+                shm_index[MAX_SHM_ENTRIES - 1].pos = NULL;
+                shm_index[MAX_SHM_ENTRIES - 1].key[0] = '\0';
             }
             return true;
         }
@@ -90,7 +132,8 @@ bool shmcut(void *p) {
 
 void printshmIndex() {
     for (int i = 0; i < MAX_SHM_ENTRIES; i++) {
-        printf("Entrada %d\n\tPos: %p\n\tKey: %s\n\tFlag: %d\n\tConnections: %d\n\n", i, _shmindex[i].pos, _shmindex[i].key,
-               _shmindex[i].flag, _shmindex[i].connections);
+        printf("Entrada %d\n\tPos: %p\n\tKey: %s\n\tFlag: %d\n\tConnections: %d\n\n", i, shm_index[i].pos,
+               shm_index[i].key,
+               shm_index[i].flag, shm_index[i].connections);
     }
 }
