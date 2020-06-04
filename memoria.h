@@ -2,6 +2,7 @@
 #define MEMORIA_H
 
 #include <stdbool.h>
+#include <stdint.h>
 
 #ifndef NULL
 #define NULL ((void*) 0x0)
@@ -9,14 +10,12 @@
 #define m_size unsigned long long
 
 #define PAGE_SIZE 4096
-#define MAX_MEMORY 1048576
+#define MAX_MEMORY 0x100000000
 #define MAX_SHM_ENTRIES 32
 #define PAGE_NUM MAX_MEMORY/PAGE_SIZE - 1
 
 #define CURR_PHYS_MAP 0x01
-#define PAGE_TABLE_START 0x10
-static char physical[MAX_MEMORY];
-#define PHYS_BASE (void*)&physical
+#define PAGE_TABLE_START 0x0
 
 typedef struct {
     void *pos;
@@ -24,8 +23,8 @@ typedef struct {
     unsigned long lastUsed;
 } __attribute__((packed)) pageIndexEntry;
 
-void* first_level_page_table;
-void** phys_mapped;
+void *first_level_page_table;
+void **phys_mapped;
 
 pageIndexEntry m_index[PAGE_NUM]; //Deprecated
 
