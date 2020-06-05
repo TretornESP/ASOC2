@@ -48,7 +48,7 @@ bool _free(void *p) {
 }
 
 void initTable() {
-    void * physical;
+    void *physical;
     first_level_page_table = physical + PAGE_TABLE_START;
     phys_mapped = physical + CURR_PHYS_MAP;
 
@@ -64,7 +64,7 @@ void initTable() {
 }
 
 void printTable() {
-    void * physical;
+    void *physical;
     printf("\nRoot table (%p)\t|\tPhysical memory base: %p\n", first_level_page_table, physical);
     for (int i = 0; ((void **) first_level_page_table)[i] != NULL; i++) {
         printf("|\tTable %d (%p)\n", i, &((void **) first_level_page_table)[i]);

@@ -7,15 +7,14 @@
 #include "paging.h"
 #include "memoria.h"
 
-#define EMULATED_MEMORY_SIZE 0x100000
 #define EMULATED_TARGET_ADDR 0x00A455
 #define EMULATED_VIRT_ADDR_1 0x31337000A455
 #define EMULATED_VIRT_ADDR_2 0x000000001455
 #define CR3_DUMMY 0xABCD23
-uint8_t ram[EMULATED_MEMORY_SIZE];
 
 void init_dummy_table();
-void populate_phys_mem(char* physical);
+
+void populate_phys_mem(char *physical);
 
 //dir: A
 //tp1: B
